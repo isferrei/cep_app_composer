@@ -1,0 +1,17 @@
+{
+    "name": "acer/cep_app_composer",
+    "description": "Buscar CEP online",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": ">=7.3.17"
+    },
+    "autoload": {
+        "psr-0": {
+            "Search": "src/"
+        },
+        "psr-4": { 
+            "acer\\cep_app_composer\\": "src/"
+        }
+    }
+}
