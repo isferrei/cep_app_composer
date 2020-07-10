@@ -1,0 +1,66 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Shopping list app</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/main.css">
+    </head>
+    <body>
+        <div id="shopping-list">
+            <div class="header">
+                <h1>{{ header.toLocaleUpperCase() }}</h1>
+                <button class="btn btn-primary" v-if="state === 'default'" @click="changeState('edit')">Add item</button>
+                <button class="btn btn-danger" v-else  @click="changeState('default')">Cancel</button>
+            </div>
+            <div class="add_item_form" v-if="state === 'edit'">
+                <input type="text" v-model="newItem" placeholder="Add an item..." @keyup.enter="saveItem">
+                <button class="btn btn-primary" :disabled="newItem.length === 0" @click="saveItem">Add</button>
+                <ul>
+                    <li v-for="item in items" :class="{strikeout: item.purchased}" @click="togglePurchased(item)">{{ item.label }}</li>
+                </ul>
+                <p v-if="items.length === 0">Nice job! You've bought all your items</p>
+            </div>
+        </div>
+        <script src="https://unpkg.com/vue"></script>
+        <script>
+            var shoppinglist = new Vue({
+                el: '#shopping-list',
+                data: {
+                        header: 'Shopping list app',
+                        state: 'default',
+                        newItem: '',
+                        items: [
+                           {
+                               label: '10 party hats',
+                               purchased: false,
+                               highPriority: true,
+                           },
+                           {
+                               label: '2 board games',
+                               purchased: false,
+                               highPriority: false,
+                           },
+                           {
+                               label: '30 candles',
+                               purchased: true,
+                               highPriority: false,
+                           },         
+                        ]
+                    },
+                methods: {
+                    saveItem: function(){
+                        this.items.push(this.newItem),
+                        this.newItem='';
+                    },
+                    changeState: function(newState){
+                        this.state = newState;
+                        this.newItem = '';
+                    },
+                    togglePurchased: function(item){
+                        item.purchased = !item.purchased;
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>
