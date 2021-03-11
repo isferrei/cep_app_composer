@@ -1,0 +1,107 @@
+<html>
+<head></head>
+<body>
+    <h4>Escolha um número entre 0 e 999:</h4>
+    <input id='number' value="50" onchange="getNumber()" type='range' min='1' max='998'>
+    <span id='text'></span>
+    
+    <h4>Número escolhido:</h4>
+    <input id='choosed' type='text' disabled>
+    <h4>Número por extenso:</h4>
+    <input id='readed' type='text' disabled>
+    
+    <script>
+        window.addEventListener('load', getNumber())
+
+        function getNumber(){
+        const unidades = ['', 'Um', 'Dois', 'Tres', 'Quatro', 'Cinco', 'Seis', 'Sete', 'Oito', 'Nove', 'Dez', 'Onze', 'Doze', 'Treze', 'Quatorze', 'Quinze', 'Dezesseis', 'Dezessete', 'Dezoito', 'Dezenove']
+        const dezena = [ '', 'Vinte', 'Trinta', 'Quarenta', 'Cinquenta', 'Sessenta', 'Setenta', 'Oitenta', 'Noventa']
+        const centena = ['','Cento', 'Duzentos', 'Trezentos', 'Quatrocentos', 'Quinhentos', 'Seiscentos', 'Setecentos', 'Oitocentos', 'Novecentos']
+        
+       
+            var number = document.querySelector("#number").value
+            document.querySelector("#text").innerHTML=number;
+            
+            var output1 = document.querySelector("#choosed");
+            output1.value = number
+
+            var output2 = document.querySelector("#readed");
+            
+
+            const string = number.toString()
+            if(string.length > 0){
+                writeNumber()
+            }
+
+            function writeNumber(){
+            
+            const length = number.toString().length;
+            const string = number.toString()
+            const extenso =  ''
+            
+            if(length == 1){
+            output2.value =  unidades[number]
+             console.log(unidades[number])
+            }
+
+            if(length == 2 && number <= 19){
+            output2.value =  unidades[number]
+             console.log(unidades[number])
+            }
+
+            if(length == 2 && number > 19){
+                let piece1 = string.substr(0,1)
+                let piece2 = string.substr(1)
+               
+                if(piece2 == 0){
+                    output2.value =  dezena[parseInt(piece1)-1]
+                }else{
+                    output2.value =  dezena[parseInt(piece1)-1] + ' e ' + unidades[parseInt(piece2)]
+                }
+            }
+
+            if(length == 3){
+                let piece1 = string.substr(0,1)
+                let piece2 = string.substr(1,1)
+                let piece3 = string.substr(2)
+                let piece4 = string.substr(1,2)
+
+               console.log(piece4)
+                if(number == 100){
+                    output2.value =  'Cem'
+                
+                }else if(piece2 == 0 && piece3 == 0){
+                    output2.value =  centena[parseInt(piece1)]
+                
+                }else if(piece2 > 1 && piece3 == 0){
+                    output2.value =  centena[parseInt(piece1)] + ' e ' + dezena[parseInt(piece2)-1] 
+                
+                }else if(piece2 == 0 && piece3 > 0){
+                    output2.value =  centena[parseInt(piece1)] + ' e ' + unidades[parseInt(piece3)] 
+                
+                }else if(piece4 > 9 && piece4 <= 19){
+                    if(piece4 == 10){
+                        output2.value =  centena[parseInt(piece1)] + ' e Dez' 
+                    }else{
+                        output2.value =  centena[parseInt(piece1)] + ' e ' + unidades[parseInt(piece4)] 
+                    }
+                
+                }else{
+                    output2.value =  centena[parseInt(piece1)] + ' e ' + dezena[parseInt(piece2)-1] + ' e ' + unidades[parseInt(piece3)]
+                }
+            }
+
+            console.log(extenso)
+
+        }
+
+        }
+
+
+   
+
+    </script> 
+  
+</body>
+
+</html>
